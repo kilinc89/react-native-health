@@ -37,10 +37,7 @@ Example output:
     "id": "FACC239C-F822-4BF6-BEC5-F5AB03346497",
     "sourceName": "Source",
     "startDate": "2021-07-12T20:09:00.699-0400",
-    "endDate": "2021-07-12T20:38:55.700-0400",
-    "metadata": {
-      "HKWasUserEntered": false
-    }
+    "endDate": "2021-07-12T20:38:55.700-0400"
   },
   {
     "value": 58.22141899831717,
@@ -48,10 +45,7 @@ Example output:
     "id": "64323F3B-EF8D-41EA-BA6E-7215DC4F9055",
     "sourceName": "Source",
     "startDate": "2021-07-12T19:39:05.699-0400",
-    "endDate": "2021-07-12T20:09:00.699-0400",
-    "metadata": {
-      "HKWasUserEntered": false
-    }
+    "endDate": "2021-07-12T20:09:00.699-0400"
   }
 ]
 ```

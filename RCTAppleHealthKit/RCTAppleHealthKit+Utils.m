@@ -9,8 +9,6 @@
 #import "RCTAppleHealthKit+Utils.h"
 #import "RCTAppleHealthKit+TypesAndPermissions.h"
 
-NSString * const kMetadataKey = @"metadata";
-
 @implementation RCTAppleHealthKit (Utils)
 
 #pragma mark - Utilities
@@ -364,13 +362,6 @@ NSString * const kMetadataKey = @"metadata";
     return [num boolValue];
 }
 
-+ (NSDictionary *)metadataFromOptions:(NSDictionary *)options withDefault:(NSDictionary *)defaultValue {
-    NSDictionary *metadata = [options objectForKey:kMetadataKey];
-    if(metadata == nil){
-        return defaultValue;
-    }
-    return metadata;
-}
 
 + (NSMutableArray *)reverseNSMutableArray:(NSMutableArray *)array {
     if ([array count] <= 1)

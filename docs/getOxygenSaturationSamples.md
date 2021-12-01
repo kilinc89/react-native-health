@@ -37,10 +37,7 @@ Example output:
     "sourceId": "com.apple.Health",
     "sourceName": "Health",
     "startDate": "2021-03-04T10:56:00.000-0500",
-    "value": 0.98,
-    "metadata": {
-      "HKWasUserEntered": false
-    }
+    "value": 0.98
   },
   {
     "id": "86ff59e7-f393-4f32-95fb-b0bf7027374d",
@@ -48,10 +45,7 @@ Example output:
     "sourceId": "com.apple.Health",
     "sourceName": "Health",
     "startDate": "2021-03-04T09:55:00.000-0500",
-    "value": 0.97,
-    "metadata": {
-      "HKWasUserEntered": false
-    }
+    "value": 0.97
   },
   {
     "id": "b8239909-e519-4e33-af3e-d87db605ae97",
@@ -59,10 +53,7 @@ Example output:
     "sourceId": "com.apple.Health",
     "sourceName": "Health",
     "startDate": "2021-03-04T08:00:00.000-0500",
-    "value": 0.95,
-    "metadata": {
-      "HKWasUserEntered": false
-    }
+    "value": 0.95
   },
   {
     "id": "349fb170-86db-4857-9ffb-c70fb4510bac",
@@ -70,10 +61,7 @@ Example output:
     "sourceId": "com.apple.Health",
     "sourceName": "Health",
     "startDate": "2021-03-03T21:43:00.000-0500",
-    "value": 0.97,
-    "metadata": {
-      "HKWasUserEntered": false
-    }
+    "value": 0.97
   }
 ]
 ```

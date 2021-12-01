@@ -75,7 +75,7 @@
         if (completion) {
             NSMutableArray *data = [NSMutableArray arrayWithCapacity:1];
 
-            dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+            dispatch_async(dispatch_get_main_queue(), ^{
 
                 for (HKQuantitySample *sample in results) {
                     HKQuantity *quantity = sample.quantity;
@@ -84,19 +84,14 @@
                     NSString *startDateString = [RCTAppleHealthKit buildISO8601StringFromDate:sample.startDate];
                     NSString *endDateString = [RCTAppleHealthKit buildISO8601StringFromDate:sample.endDate];
 
-                    NSMutableDictionary *elem = [NSMutableDictionary dictionaryWithDictionary:@{
+                    NSDictionary *elem = @{
                             @"value" : @(value),
                             @"id" : [[sample UUID] UUIDString],
                             @"sourceName" : [[[sample sourceRevision] source] name],
                             @"sourceId" : [[[sample sourceRevision] source] bundleIdentifier],
                             @"startDate" : startDateString,
                             @"endDate" : endDateString,
-                    }];
-
-                    NSDictionary *metadata = [sample metadata];
-                    if (metadata) {
-                        [elem setValue:metadata forKey:kMetadataKey];
-                    }
+                    };
 
                     [data addObject:elem];
                 }
@@ -140,7 +135,7 @@
         if (completion) {
             NSMutableArray *data = [NSMutableArray arrayWithCapacity:1];
 
-            dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+            dispatch_async(dispatch_get_main_queue(), ^{
                 if (type == [HKObjectType workoutType]) {
                     for (HKWorkout *sample in results) {
                         @try {
@@ -252,7 +247,7 @@
                              limit:(NSUInteger)lim
                         completion:(void (^)(NSArray *, NSError *))completion {
     NSSortDescriptor *timeSortDescriptor = [[NSSortDescriptor alloc] initWithKey:HKSampleSortIdentifierEndDate ascending:asc];
-
+    
     void (^handlerBlock)(HKSampleQuery *query, NSArray *results, NSError *error);
 
     handlerBlock = ^(HKSampleQuery *query, NSArray *results, NSError *error) {
@@ -264,19 +259,19 @@
         }
         if (completion) {
             NSMutableArray *data = [NSMutableArray arrayWithCapacity:1];
-
-            dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+            
+            dispatch_async(dispatch_get_main_queue(), ^{
                 for (HKClinicalRecord *record in results) {
                     NSString *startDateString = [RCTAppleHealthKit buildISO8601StringFromDate:record.startDate];
                     NSString *endDateString = [RCTAppleHealthKit buildISO8601StringFromDate:record.endDate];
-
+                    
                     NSError *jsonE = nil;
                     NSArray *fhirData = [NSJSONSerialization JSONObjectWithData:record.FHIRResource.data options: NSJSONReadingMutableContainers error: &jsonE];
 
                     if (!fhirData) {
                       completion(nil, jsonE);
                     }
-
+                    
                     NSString *fhirRelease;
                     NSString *fhirVersion;
                     if (@available(iOS 14.0, *)) {
@@ -288,7 +283,7 @@
                         fhirRelease = @"DSTU2";
                         fhirVersion = @"1.0.2";
                     }
-
+                        
                     NSDictionary *elem = @{
                         @"id" : [[record UUID] UUIDString],
                         @"sourceName" : [[[record sourceRevision] source] name],
@@ -306,7 +301,7 @@
             });
         }
     };
-
+    
     HKSampleQuery *query = [[HKSampleQuery alloc] initWithSampleType:type predicate:predicate limit:lim sortDescriptors:@[timeSortDescriptor] resultsHandler:handlerBlock];
     [self.healthStore executeQuery:query];
 }
@@ -333,7 +328,7 @@
         if (completion) {
             NSMutableArray *data = [NSMutableArray arrayWithCapacity:1];
 
-            dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+            dispatch_async(dispatch_get_main_queue(), ^{
                 for (HKWorkout *sample in sampleObjects) {
                     @try {
                         double energy =  [[sample totalEnergyBurned] doubleValueForUnit:[HKUnit kilocalorieUnit]];
@@ -378,7 +373,7 @@
                         NSLog(@"RNHealth: An error occured while trying to add workout sample from: %@ ", [[[sample sourceRevision] source] bundleIdentifier]);
                     }
                 }
-
+                
                 NSData *anchorData = [NSKeyedArchiver archivedDataWithRootObject:newAnchor];
                 NSString *anchorString = [anchorData base64EncodedStringWithOptions:0];
                 completion(@{
@@ -400,11 +395,10 @@
 
 - (void)fetchSleepCategorySamplesForPredicate:(NSPredicate *)predicate
                                         limit:(NSUInteger)lim
-                                    ascending:(BOOL)asc
                                    completion:(void (^)(NSArray *, NSError *))completion {
 
     NSSortDescriptor *timeSortDescriptor = [[NSSortDescriptor alloc] initWithKey:HKSampleSortIdentifierEndDate
-                                                                       ascending:asc];
+                                                                       ascending:false];
 
 
     // declare the block
@@ -421,7 +415,7 @@
         if (completion) {
             NSMutableArray *data = [NSMutableArray arrayWithCapacity:1];
 
-            dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+            dispatch_async(dispatch_get_main_queue(), ^{
 
                 for (HKCategorySample *sample in results) {
                     NSInteger val = sample.value;
@@ -444,7 +438,6 @@
                   }
 
                     NSDictionary *elem = @{
-                            @"id" : [[sample UUID] UUIDString],
                             @"value" : valueString,
                             @"startDate" : startDateString,
                             @"endDate" : endDateString,
@@ -496,7 +489,7 @@
         if (completion) {
             NSMutableArray *data = [NSMutableArray arrayWithCapacity:1];
 
-            dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+            dispatch_async(dispatch_get_main_queue(), ^{
 
                 for (HKCorrelation *sample in results) {
                     NSString *startDateString = [RCTAppleHealthKit buildISO8601StringFromDate:sample.startDate];
@@ -805,7 +798,7 @@
             NSMutableArray *data = [NSMutableArray arrayWithCapacity:1];
             NSDictionary *numberToWorkoutNameDictionary = [RCTAppleHealthKit getNumberToWorkoutNameDictionary];
 
-            dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+            dispatch_async(dispatch_get_main_queue(), ^{
                 for (HKWorkout * sample in results) {
                     double energy = [[sample totalEnergyBurned] doubleValueForUnit:[HKUnit kilocalorieUnit]];
                     double distance = [[sample totalDistance] doubleValueForUnit:[HKUnit mileUnit]];
@@ -865,7 +858,7 @@
             return;
         }
 
-        [self sendEventWithName:successEvent body:@{}];
+        [self.bridge.eventDispatcher sendAppEventWithName:successEvent body:@{}];
 
         completionHandler();
 
@@ -886,7 +879,7 @@
 
         [self.healthStore executeQuery:query];
 
-        [self sendEventWithName:successEvent body:@{}];
+        [self.bridge.eventDispatcher sendAppEventWithName:successEvent body:@{}];
     }];
 }
 
@@ -901,7 +894,6 @@
 - (void)setObserverForType:(HKSampleType *)sampleType
                       type:(NSString *)type
                     bridge:(RCTBridge *)bridge
-                    hasListeners:(bool)hasListeners
 {
     HKObserverQuery* query = [
         [HKObserverQuery alloc] initWithSampleType:sampleType
@@ -918,14 +910,14 @@
             completionHandler();
 
             NSLog(@"[HealthKit] An error happened when receiving a new sample - %@", error.localizedDescription);
-            if(self.hasListeners) {
-                [self sendEventWithName:failureEvent body:@{}];
-            }
+
+            [bridge.eventDispatcher sendAppEventWithName:failureEvent body:@{}];
+
             return;
         }
-        if(self.hasListeners) {
-            [self sendEventWithName:successEvent body:@{}];
-        }
+
+        [bridge.eventDispatcher sendAppEventWithName:successEvent body:@{}];
+
         completionHandler();
 
         NSLog(@"[HealthKit] New sample from Apple HealthKit processed - %@", type);
@@ -940,17 +932,16 @@
 
         if (error) {
             NSLog(@"[HealthKit] An error happened when setting up background observer - %@", error.localizedDescription);
-            if(self.hasListeners) {
-                [self sendEventWithName:failureEvent body:@{}];
-            }
+
+            [bridge.eventDispatcher sendAppEventWithName:failureEvent body:@{}];
+
             return;
         }
 
         [self.healthStore executeQuery:query];
-        if(self.hasListeners) {
-            [self sendEventWithName:successEvent body:@{}];
-        }
-        }];
+
+        [bridge.eventDispatcher sendAppEventWithName:successEvent body:@{}];
+    }];
 }
 
 - (void)fetchActivitySummary:(NSDate *)startDate
@@ -965,20 +956,20 @@
                                                      fromDate:endDate];
     endComponent.calendar = calendar;
     NSPredicate *predicate = [HKQuery predicateForActivitySummariesBetweenStartDateComponents:startComponent endDateComponents:endComponent];
-
+    
     HKActivitySummaryQuery *query = [[HKActivitySummaryQuery alloc] initWithPredicate:predicate
                                         resultsHandler:^(HKActivitySummaryQuery *query, NSArray *results, NSError *error) {
-
+        
         if (error) {
             // Perform proper error handling here
             NSLog(@"*** An error occurred while fetching the summary: %@ ***",error.localizedDescription);
             completionHandler(nil, error);
             return;
         }
-
+        
         NSMutableArray *data = [NSMutableArray arrayWithCapacity:1];
 
-        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        dispatch_async(dispatch_get_main_queue(), ^{
             for (HKActivitySummary *summary in results) {
                 int aebVal = [summary.activeEnergyBurned doubleValueForUnit:[HKUnit kilocalorieUnit]];
                 int aebgVal = [summary.activeEnergyBurnedGoal doubleValueForUnit:[HKUnit kilocalorieUnit]];
@@ -1004,7 +995,7 @@
     }];
 
     [self.healthStore executeQuery:query];
-
+    
 }
 
 @end

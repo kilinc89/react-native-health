@@ -193,7 +193,6 @@ they are splitted in the following categories
 
 - [getEnergyConsumedSamples](/docs/getEnergyConsumedSamples.md)
 - [getProteinSamples](/docs/getProteinSamples.md)
-- [getTotalFatSamples](/docs/getTotalFatSamples.md)
 - [saveFood](/docs/saveFood.md)
 - [saveWater](/docs/saveWater.md)
 - [getWater](/docs/getWater.md)
@@ -225,13 +224,11 @@ they are splitted in the following categories
 - [getLatestBloodAlcoholContent](/docs/getLatestBloodAlcoholContent.md)
 - [saveBloodAlcoholContent](/docs/saveBloodAlcoholContent.md)
 - [saveBloodGlucoseSample](/docs/saveBloodGlucoseSample.md)
-- [deleteBloodGlucoseSample](/docs/deleteBloodGlucoseSample.md)
 
 ### Nutrition
 
 - [getCarbohydratesSamples](/docs/getCarbohydratesSamples.md)
 - [saveCarbohydratesSample](/docs/saveCarbohydratesSample.md)
-- [deleteCarbohydratesSample](/docs/deleteCarbohydratesSample.md)
 
 ### Mindfulness Methods
 
@@ -253,7 +250,6 @@ they are splitted in the following categories
 - [getRestingHeartRateSamples](/docs/getRestingHeartRateSamples.md)
 - [getVo2MaxSamples](/docs/getVo2MaxSamples.md)
 - [getLatestBmi](/docs/getLatestBmi.md)
-- [getBmiSamples](/docs/getBmiSamples.md)
 - [getRespiratoryRateSamples](/docs/getRespiratoryRateSamples.md)
 - [getWalkingHeartRateAverage](/docs/getWalkingHeartRateAverage.md)
 - [saveBmi](/docs/saveBmi.md)

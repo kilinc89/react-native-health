@@ -83,7 +83,6 @@
 
 - (void)fetchSleepCategorySamplesForPredicate:(NSPredicate *)predicate
                                    limit:(NSUInteger)lim
-                                   ascending:(BOOL)asc
                                    completion:(void (^)(NSArray *, NSError *))completion;
 
 - (void)fetchWorkoutForPredicate:(NSPredicate *)predicate
@@ -96,8 +95,7 @@
 
 - (void)setObserverForType:(HKSampleType *)quantityType
                       type:(NSString *)type
-                    bridge:(RCTBridge *)bridge
-                    hasListeners:(bool)hasListeners;
+                    bridge:(RCTBridge *)bridge;
 
 - (void)fetchActivitySummary:(NSDate *)startDate
                      endDate:(NSDate *)endDate

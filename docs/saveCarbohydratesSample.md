@@ -11,10 +11,6 @@ let options = {
   value: 16.7,
   date: new Date(2020, 1, 1).toISOString(),
   unit: 'gramUnit', // Optional, default is gram
-  metadata: {
-    HKWasUserEntered: true,
-    anyOtherKey: 'some data', // supports string, number, boolean
-  }
 }
 ```
 
@@ -23,7 +19,7 @@ Call the method:
 ```javascript
 AppleHealthKit.saveFood(
   (options: HealthInputOptions),
-  (err: Object, results: string) => {
+  (err: Object, results: number) => {
     if (err) {
       return
     }
@@ -32,8 +28,8 @@ AppleHealthKit.saveFood(
 )
 ```
 
-Example output (record's UUID):
+Example output:
 
 ```json
-"ba13089a-a311-4ffe-9352-f5c568936f16"
+16.7
 ```

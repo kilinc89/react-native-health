@@ -36,10 +36,7 @@ Example output:
     "sourceId": "com.apple.Health",
     "sourceName": "Health",
     "startDate": "2021-03-22T16:21:00.000-0300",
-    "value": 8,
-    "metadata": {
-      "HKWasUserEntered": true,
-    }
+    "value": 8
   }
 ]
 ```
