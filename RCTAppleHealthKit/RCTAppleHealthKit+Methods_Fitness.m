@@ -40,11 +40,29 @@
             return;
         }
 
-         NSDictionary *response = @{
-                 @"value" : @(value),
-                 @"startDate" : [RCTAppleHealthKit buildISO8601StringFromDate:startDate],
-                 @"endDate" : [RCTAppleHealthKit buildISO8601StringFromDate:endDate],
-         };
+        NSString *startDateString = [RCTAppleHealthKit buildISO8601StringFromDate:startDate];
+        if (startDateString == nil) {
+            startDateString = [RCTAppleHealthKit buildISO8601StringFromDate:date];
+            if (startDateString == nil) {
+                callback(@[RCTJSErrorFromNSError(error)]);
+                return;
+            }
+        }
+
+        NSString *endDateString = [RCTAppleHealthKit buildISO8601StringFromDate:endDate];
+        if (endDateString == nil) {
+            endDateString = [RCTAppleHealthKit buildISO8601StringFromDate:date];
+            if (endDateString == nil) {
+                callback(@[RCTJSErrorFromNSError(error)]);
+                return;
+            }
+        }
+
+        NSDictionary *response = @{
+                @"value" : @(value),
+                @"startDate" : startDateString,
+                @"endDate" : endDateString,
+        };
 
         callback(@[[NSNull null], response]);
     }];
